@@ -1,7 +1,12 @@
-const BASE = "http://backend:8080/api";
+const BASE_URL = "http://backend:8080/api";
 
-export async function getHealth() {
-  // Temporary
+export type HealthStatus = {
+  backend: string;
+  ai: string;
+  engine: string;
+};
+
+export async function getHealth(): Promise<HealthStatus> {
   return {
     backend: "ok",
     ai: "stub",
@@ -9,9 +14,14 @@ export async function getHealth() {
   };
 }
 
-export async function runAI(input: string) {
+export type AIResult = {
+  output: string;
+  latency_ms: number;
+};
+
+export async function runAI(input: string): Promise<AIResult> {
   return {
-    output: `Stub output for "${input}"`,
+    output: `Stub response for: ${input}`,
     latency_ms: 8,
   };
 }

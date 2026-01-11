@@ -5,13 +5,13 @@ export default async function Dashboard() {
 
   return (
     <div className="grid grid-cols-3 gap-4">
-      {Object.entries(health).map(([k, v]) => (
+      {Object.entries(health).map(([key, value]) => (
         <div
-          key={k}
-          className="bg-slate-900 p-4 rounded border border-slate-800"
+          key={key}
+          className="rounded border border-slate-800 bg-slate-900 p-4"
         >
-          <div className="text-sm text-slate-400">{k}</div>
-          <div className="text-xl font-semibold">{v}</div>
+          <div className="text-sm text-slate-400">{key}</div>
+          <div className="text-xl font-semibold">{value}</div>
         </div>
       ))}
     </div>

@@ -1,5 +1,10 @@
-import "./globals.css";
+import "@/app/globals.css";
 import { Sidebar } from "@/components/layout/Sidebar";
+
+export const metadata = {
+  title: "AstraCore",
+  description: "Local-first AI system dashboard",
+};
 
 export default function RootLayout({
   children,
@@ -8,9 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="flex h-screen text-gray-100">
+      <body className="flex h-screen bg-slate-950 text-slate-100">
         <Sidebar />
-        <main className="flex-1 p-6 overflow-auto">
+        <main className="flex-1 overflow-auto p-6">
           {children}
         </main>
       </body>

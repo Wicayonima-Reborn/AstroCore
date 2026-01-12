@@ -2,7 +2,7 @@ use axum::{
     routing::{get, post},
     Json, Router,
 };
-use serde_json::json;
+use serde_json::{json, Value};
 use tokio::net::TcpListener;
 
 #[tokio::main]
@@ -11,18 +11,11 @@ async fn main() {
         .route("/api/health", get(health))
         .route("/api/ai/run", post(run_ai));
 
-    println!("backend running on :8080");
-
-    let listener = TcpListener::bind("0.0.0.0:8080")
-        .await
-        .unwrap();
-
-    axum::serve(listener, app)
-        .await
-        .unwrap();
+    let listener = TcpListener::bind("0.0.0.0:8080").await.unwrap();
+    axum::serve(listener, app).await.unwrap();
 }
 
-async fn health() -> Json<serde_json::Value> {
+async fn health() -> Json<Value> {
     Json(json!({
         "backend": "ok",
         "ai": "stub",
@@ -30,9 +23,14 @@ async fn health() -> Json<serde_json::Value> {
     }))
 }
 
-async fn run_ai() -> Json<serde_json::Value> {
+async fn run_ai(Json(payload): Json<Value>) -> Json<Value> {
+    let input = payload
+        .get("input")
+        .and_then(|v| v.as_str())
+        .unwrap_or("");
+
     Json(json!({
-        "output": "stub response",
+        "output": format!("Echo from backend: {}", input),
         "latency_ms": 5
     }))
 }
